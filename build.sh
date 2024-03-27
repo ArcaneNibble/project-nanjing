@@ -1,0 +1,10 @@
+set -xeuo pipefail
+
+arm-none-eabi-gcc -ggdb3 -DCH57xBLE_ROM -ffunction-sections -fdata-sections -mcpu=cortex-m0 -Os -I../src/EVT/EXAM/BLE/HAL/include -I../src/EVT/EXAM/BLE/LIB -I../src/EVT/EXAM/SRC/StdPeriphDriver/inc -I../src/EVT/EXAM/SRC/CMSIS/Include -c startup.c
+arm-none-eabi-gcc -ggdb3 -DCH57xBLE_ROM -ffunction-sections -fdata-sections -mcpu=cortex-m0 -Os -I../src/EVT/EXAM/BLE/HAL/include -I../src/EVT/EXAM/BLE/LIB -I../src/EVT/EXAM/SRC/StdPeriphDriver/inc -I../src/EVT/EXAM/SRC/CMSIS/Include -c ../src/EVT/EXAM/SRC/StdPeriphDriver/CH57x_clk.c
+arm-none-eabi-gcc -ggdb3 -DCH57xBLE_ROM -ffunction-sections -fdata-sections -mcpu=cortex-m0 -Os -I../src/EVT/EXAM/BLE/HAL/include -I../src/EVT/EXAM/BLE/LIB -I../src/EVT/EXAM/SRC/StdPeriphDriver/inc -I../src/EVT/EXAM/SRC/CMSIS/Include -c ../src/EVT/EXAM/SRC/StdPeriphDriver/CH57x_pwr.c
+arm-none-eabi-gcc -ggdb3 -DCH57xBLE_ROM -ffunction-sections -fdata-sections -mcpu=cortex-m0 -Os -I../src/EVT/EXAM/BLE/HAL/include -I../src/EVT/EXAM/BLE/LIB -I../src/EVT/EXAM/SRC/StdPeriphDriver/inc -I../src/EVT/EXAM/SRC/CMSIS/Include -c ../src/EVT/EXAM/SRC/StdPeriphDriver/CH57x_sys.c
+# arm-none-eabi-gcc -ggdb3 -DCH57xBLE_ROM -ffunction-sections -fdata-sections -mcpu=cortex-m0 -Os -I../src/EVT/EXAM/BLE/HAL/include -I../src/EVT/EXAM/BLE/LIB -I../src/EVT/EXAM/SRC/StdPeriphDriver/inc -I../src/EVT/EXAM/SRC/CMSIS/Include -c ../src/EVT/EXAM/SRC/StdPeriphDriver/CH57x_uart1.c
+arm-none-eabi-gcc -ggdb3 -DCH57xBLE_ROM -ffunction-sections -fdata-sections -mcpu=cortex-m0 -Os -I../src/EVT/EXAM/BLE/HAL/include -I../src/EVT/EXAM/BLE/LIB -I../src/EVT/EXAM/SRC/StdPeriphDriver/inc -I../src/EVT/EXAM/SRC/CMSIS/Include -c main.c
+arm-none-eabi-gcc -ggdb3 -o test.elf --specs=nosys.specs -mcpu=cortex-m0plus -Wl,--gc-sections -Wl,--script=link.ld *.o
+arm-none-eabi-objdump -xdsS test.elf >test.dump
