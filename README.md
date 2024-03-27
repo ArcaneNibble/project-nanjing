@@ -64,6 +64,7 @@ The registers here are mirrored every 0x20 bytes
     * bits [12:0] are set to a length when transmitting
     * bit 13 is set on init, might be the "IRQMASK" described by the datasheet
     * bits[15:14] can also be set, unknown function
+        * bit 15 makes DMA not stop once triggered, filling memory with garbage
     * bits[31:16] cannot be set
 * +0x10 R32_DMA0_TX_SRC
 * +0x14 R32_DMA2_TX_SRC
@@ -86,23 +87,39 @@ The registers here are mirrored every 0x80 bytes
 * +0x14
     * reset value 0x45514ab3
 	* can set 0xffffffff
+    * writing 0 here breaks RX
+        * 0x45514ab0 -> okay
+        * 0x40514ab0 -> okay?
+        * 0x40014ab0 -> weirder?
+        * 0x40000ab0 -> still get something
+        * 0x400000b0 -> still something
+        * 0x40000080 -> minimal?
+    * writing 0xffffffff breaks RX
+        * 0x4fffffff -> can RX
+        * 0xdfffffff -> can RX
 * +0x18
     * reset value 0xc60a663f
 	* can set 0xffffffff
+    * writing 0 here does weird stuff, doesn't break RX
+    * bit 1 --> write RSSI into packet footer
 * +0x1c
     * reset value 0x00140000
 	* can set 0x003fffff
+    * writing 0 here sometimes breaks RX
 * +0x20
     * reset value 0x00205830
 	* can set 0x00ffffff
+    * writing 0 here does weird stuff, doesn't break RX
 * +0x24
     * reset value 0x810e026c
 	* can set 0xffffffff
+    * writing 0 here does weird stuff, doesn't break RX
 * +0x28
     * reset value 0x000908be
 	* can set 0x3fffffbe
 	* cannot clear the 0xbe bits
 	* 0xbe bits somehow affected by above unk registers
+    * writing 0 here breaks RX
 * +0x2c R32_BB_CTRL_TX
     * can set 0x71fffffb
     * poked by blob a bunch
